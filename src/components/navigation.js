@@ -3,7 +3,8 @@ import { Link } from "gatsby";
 import styles from "../assets/css/components/navigation.module.css";
 
 export default () => (
-  <nav role="navigation">
+  <nav className={styles.navigationContainer} role="navigation">
+    <p>Developerontour</p>
     <ul className={styles.navigation}>
       <li className={styles.navigationItem}>
         <Link to="/">Home</Link>
