@@ -11,12 +11,13 @@ class RootIndex extends React.Component {
     const siteTitle = get(this, "props.data.site.siteMetadata.title");
     const posts = get(this, "props.data.allContentfulBlogPost.edges");
     const [author] = get(this, "props.data.allContentfulPerson.edges");
-
+    const [banner] = get(this, "props.data.allContentfulBanner.edges");
+    console.log(banner.node);
     return (
       <Layout location={this.props.location}>
         <div style={{ background: "#fff" }}>
           <Helmet title={siteTitle} />
-          <Hero data={author.node} />
+          <Hero data={banner.node} />
           <div className="wrapper">
             <h2 className="section-headline">Recent articles</h2>
             <ul className="article-list">
@@ -59,6 +60,22 @@ export const pageQuery = graphql`
         }
       }
     }
+    allContentfulBanner(filter: { bannerText: { eq: "jammy" } }) {
+      edges {
+        node {
+          bannerText
+          bannerImage {
+            fluid(
+              maxHeight: 800
+              resizingBehavior: PAD
+              background: "rgb:000000"
+            ) {
+              ...GatsbyContentfulFluid_tracedSVG
+            }
+          }
+        }
+      }
+    }
     allContentfulPerson(
       filter: { contentful_id: { eq: "15jwOBqpxqSAOy2eOO4S0m" } }
     ) {
@@ -71,7 +88,7 @@ export const pageQuery = graphql`
           title
           heroImage: image {
             fluid(
-              maxHeight: 480
+              maxHeight: 800
               resizingBehavior: PAD
               background: "rgb:000000"
             ) {
